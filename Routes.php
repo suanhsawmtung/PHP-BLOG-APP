@@ -15,6 +15,7 @@ Router::post("/admin/createBlog",       [PostsController::class, "createBlog"]);
 Router::get("/admin/editPage",          [PostsController::class, "editPage"]);
 Router::post("/admin/updateBlog",       [PostsController::class, "updateBlog"]);
 Router::get("/admin/deleteBlog",        [PostsController::class, "deleteBlog"]);
+Router::get("/admin/search",            [PostsController::class, "search"]);
 
 
 // User

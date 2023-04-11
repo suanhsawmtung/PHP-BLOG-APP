@@ -94,15 +94,49 @@ require "views/components/sideBar.view.php";
                             </table>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer clearfix">
+
+                        <!-- Paginator -->
+                        <div class="card-footer clearfix <?php if($totalPages==1){ echo "d-none"; } ?>">
                             <ul class="pagination pagination-sm m-0 float-right">
-                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                                <li class="page-item <?php if($pageno == 1){ echo "d-none"; } ?>">
+                                    <a class="page-link" href="/admin">&laquo;</a>
+                                </li>
+                                
+                                <li class="page-item <?php if($pageno == 1){ echo "d-none"; } ?>">
+                                    <a class="page-link" href=<?= "/admin?pageno=".$pageno-1 ?> ><</a>
+                                </li>
+                                
+                                <li class="page-item <?php if($pageno == $totalPages && $totalPages >=3 ){ echo "d-block"; }else{ echo "d-none";} ?>">
+                                    <a class="page-link" href= <?= "/admin?pageno=".$pageno-2 ?> ><?= $pageno-2 ?></a>
+                                </li>
+                                
+                                <li class="page-item <?php if($pageno == 1){ echo "d-none"; } ?>">
+                                    <a class="page-link" href= <?= "/admin?pageno=".$pageno-1 ?> ><?= $pageno-1 ?></a>
+                                </li>
+                                
+                                <li class="page-item disabled">
+                                    <a class="page-link bg-primary text-whit" href=<?= "/admin?pageno=".$pageno ?>><?= $pageno ?></a>
+                                </li>
+                                
+                                <li class="page-item <?php if($pageno == $totalPages){ echo "d-none"; } ?>">
+                                    <a class="page-link" href="<?= "/admin?pageno=".$pageno+1 ?>"><?= $pageno+1 ?></a>
+                                </li>
+                                
+                                <li class="page-item <?php if($pageno == 1 && $totalPages >= 3){ echo "d-block";}else{ echo "d-none"; } ?>">
+                                    <a class="page-link" href= <?= "/admin?pageno=".$pageno+2 ?> ><?= $pageno+2 ?></a>
+                                </li>
+                                
+                                <li class="page-item <?php if($pageno == $totalPages){ echo "d-none"; } ?>">
+                                    <a class="page-link" href="<?= "/admin?pageno=".$pageno+1 ?>">></a>
+                                </li>
+                                
+                                <li class="page-item <?php if($pageno == $totalPages){ echo "d-none"; } ?>">
+                                    <a class="page-link" href="<?= "/admin?pageno=".$totalPages ?>">&raquo;</a>
+                                </li>
                             </ul>
                         </div>
+                        <!-- Paginator -->
+
                     </div>
                 </div>
             </div>

@@ -6,17 +6,37 @@ use PDO;
 use core\App\App;
 
 class PostsController{
-    public function index(){
-        
+    public function __construct(){
         if(empty($_SESSION['id']) && empty($_SESSION['logged_in'])){
             return redirect("/admin/loginPage");
         }
+    }
 
-        $statement = App::get('pdo')->prepare("SELECT * FROM posts ORDER BY id DESC");
+    public function index(){
+
+        $statement = App::get('pdo')->prepare("SELECT * FROM posts");
+        $statement->execute();
+        $allPosts = $statement->fetchAll(PDO::FETCH_OBJ);
+
+        $perPage = 3;
+        $pageno = 1;
+
+        if(!empty($_GET["pageno"])){
+            $pageno = intVal(request("pageno"));
+        }
+
+        $offset = ($pageno-1)*$perPage;
+        $totalPages = ceil(count($allPosts)/$perPage);
+        
+        $statement = App::get('pdo')->prepare("SELECT * FROM posts ORDER BY id DESC LIMIT $offset,$perPage ");
         $statement->execute();
         $posts = $statement->fetchAll(PDO::FETCH_OBJ);
 
-        return view("admin.index", ["posts" => $posts]);
+        return view("admin.index", [
+            "posts" => $posts,
+            "pageno" => $pageno,
+            "totalPages" => $totalPages
+        ]);
     }
 
     public function createPage(){
@@ -67,12 +87,7 @@ class PostsController{
         $content = request("content");
 
         if($_FILES["image"]["name"]){
-            $statement = App::get("pdo")->prepare("SELECT image FROM posts WHERE id=:id");
-            $statement->bindValue(":id", request("id"));
-            $statement->execute();
-            $post = $statement->fetch(PDO::FETCH_OBJ);
-
-            unlink($post->image);
+            $this->deleteImage();
 
             $file = "public/images/".$_FILES["image"]["name"];
 
@@ -92,17 +107,13 @@ class PostsController{
         }
 
         if($result){
+            $_SESSION["success"] = "Updated blog successfully.";
             return redirect("/admin");
         }
     }
 
     public function deleteBlog(){
-        $statement = App::get("pdo")->prepare("SELECT image FROM posts WHERE id=:id");
-        $statement->bindValue(":id", request("id"));
-        $statement->execute();
-        $post = $statement->fetch(PDO::FETCH_OBJ);
-
-        unlink($post->image);
+        $this->deleteImage();
 
         $statement = App::get("pdo")->prepare("DELETE FROM posts WHERE id=:id");
         $statement->bindValue(":id", request("id"));
@@ -112,5 +123,46 @@ class PostsController{
             $_SESSION["success"] = "Deleted blog successfully.";
             return redirect("/admin");
         }
+    }
+
+    public function search(){
+        $searchKey = request("searchKey");
+
+        if(empty($searchKey)){
+            return redirect("/admin");
+        }
+
+        $statement = App::get('pdo')->prepare("SELECT * FROM posts WHERE title LIKE '%$searchKey%'" );
+        $statement->execute();
+        $allPosts = $statement->fetchAll(PDO::FETCH_OBJ);
+
+        $perPage = 3;
+        $pageno = 1;
+
+        if(!empty($_GET["pageno"])){
+            $pageno = intVal(request("pageno"));
+        }
+
+        $offset = ($pageno-1)*$perPage;
+        $totalPages = ceil(count($allPosts)/$perPage);
+        
+        $statement = App::get('pdo')->prepare("SELECT * FROM posts WHERE title LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offset,$perPage");
+        $statement->execute();
+        $posts = $statement->fetchAll(PDO::FETCH_OBJ);
+
+        return view("admin.index", [
+            "posts" => $posts,
+            "pageno" => $pageno,
+            "totalPages" => $totalPages
+        ]);
+    }
+
+    private function deleteImage(){
+        $statement = App::get("pdo")->prepare("SELECT image FROM posts WHERE id=:id");
+        $statement->bindValue(":id", request("id"));
+        $statement->execute();
+        $post = $statement->fetch(PDO::FETCH_OBJ);
+
+        unlink($post->image);
     }
 }
