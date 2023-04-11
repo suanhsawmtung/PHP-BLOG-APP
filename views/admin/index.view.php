@@ -41,7 +41,12 @@ require "views/components/sideBar.view.php";
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card">
+                    <div class="justify-content-center align-items-center text-muted 
+                        <?php if($totalPages != 0){ echo 'd-none'; }else{ echo 'd-flex'; } ?>"
+                    >
+                        <h1>There is no block post here.</h1>
+                    </div>
+                    <div class="card <?php if($totalPages==0){ echo 'd-none';} ?>">
                         <div class="card-header">
                             <a href="/admin/createPage" class="btn btn-success">+ Create New Blog</a>
                         </div>
@@ -96,7 +101,7 @@ require "views/components/sideBar.view.php";
                         <!-- /.card-body -->
 
                         <!-- Paginator -->
-                        <div class="card-footer clearfix <?php if($totalPages==1){ echo "d-none"; } ?>">
+                        <div class="card-footer clearfix <?php if($totalPages<=1){ echo "d-none"; } ?>">
                             <ul class="pagination pagination-sm m-0 float-right">
                                 <li class="page-item <?php if($pageno == 1){ echo "d-none"; } ?>">
                                     <a class="page-link" href="/admin">&laquo;</a>
