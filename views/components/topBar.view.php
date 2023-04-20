@@ -7,6 +7,21 @@
         </li>
     </ul>
 
+    <?php
+        $uri = $_SERVER["PHP_SELF"];
+        $uriArray = explode("/", $uri);
+        $endUri = end($uriArray);
+        $searchUri;
+
+        if($endUri === "users" || in_array("users", $uriArray)){
+            $searchUri = "/admin/users/search";
+        }
+
+        if($endUri === "admin" || in_array("posts", $uriArray)){
+            $searchUri = "/admin/posts/search";
+        }
+    ?>
+
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
@@ -15,7 +30,7 @@
                 <i class="fas fa-search"></i>
             </a>
             <div class="navbar-search-block">
-                <form class="form-inline" action="/admin/search" method="GET">
+                <form class="form-inline" action="<?= $searchUri ?>" method="GET">
                     <div class="input-group input-group-sm">
                         <input class="form-control form-control-navbar" name="searchKey" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">

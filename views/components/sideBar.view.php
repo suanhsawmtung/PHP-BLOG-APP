@@ -20,13 +20,35 @@
             </div>
         </div>
 
+        <?php
+            $uri = $_SERVER["PHP_SELF"];
+            $uriArray = explode("/", $uri);
+            $endUri = end($uriArray);
+
+            $searchStatus;
+
+            if(in_array("posts", $uriArray)){
+                $searchStatus = "posts";
+            }
+
+            if(in_array("users", $uriArray)){
+                $searchStatus = "users";
+            }
+        ?>
+
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item <?php if($endUri === "admin" || $searchStatus === "posts"){ echo "border-top border-bottom border-muted"; } ?>">
+                    <a href="/admin" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>Blog</p>
+                    </a>
+                </li>
+                <li class="nav-item <?php if($endUri === "users" || $searchStatus === "users"){ echo "border-top border-bottom border-muted"; } ?>">
+                    <a href="/admin/users" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Users</p>
                     </a>
                 </li>
             </ul>

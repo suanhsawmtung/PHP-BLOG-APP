@@ -10,6 +10,10 @@ class PostsController{
         if(empty($_SESSION['id']) && empty($_SESSION['logged_in'])){
             return redirect("/admin/loginPage");
         }
+
+        if($_SESSION["role"] != 0){
+            return redirect("/admin/loginPage");
+        }
     }
 
     public function index(){
@@ -28,7 +32,9 @@ class PostsController{
         $offset = ($pageno-1)*$perPage;
         $totalPages = ceil(count($allPosts)/$perPage);
         
-        $statement = App::get('pdo')->prepare("SELECT * FROM posts ORDER BY id DESC LIMIT $offset,$perPage ");
+        $statement = App::get('pdo')->prepare(
+            "SELECT posts.*, users.name as author_name FROM posts LEFT JOIN users ON posts.author_id=users.id ORDER BY id DESC LIMIT $offset,$perPage"
+        );
         $statement->execute();
         $posts = $statement->fetchAll(PDO::FETCH_OBJ);
 
@@ -44,11 +50,35 @@ class PostsController{
     }
 
     public function createBlog(){
+
+        if(empty($_POST["title"]) || empty($_POST["content"]) || empty($_FILES["image"]["name"])){
+            if(empty($_POST["title"])){
+                $_SESSION['titleError'] = "Title field is required.";
+            }else {
+                $_SESSION['title'] = $_POST['title'];
+            }
+
+            if(empty($_POST["content"])){
+                $_SESSION['contentError'] = "Content field is required.";
+            }else {
+                $_SESSION['content'] = $_POST['content'];
+            }
+
+            if(empty($_FILES["image"]["name"])){
+                $_SESSION['imageError'] = "Image field is required.";
+            }
+
+            return back();
+        }
+
         $file = "public/images/".$_FILES["image"]["name"];
 
         $fileType = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
         if($fileType != 'jpg' && $fileType != 'jpeg' && $fileType != "png"){
+            $_SESSION['imageError'] = "Image type must be jpg or jpeg or png.";
+            $_SESSION['title'] = $_POST['title'];
+            $_SESSION['content'] = $_POST['content'];
             return back();
         }
 
@@ -82,6 +112,25 @@ class PostsController{
     }
 
     public function updateBlog(){
+
+        if(empty($_POST["title"]) || empty($_POST["content"])){
+            if(empty($_POST["title"])){
+                $_SESSION['titleError'] = "Title field is required.";
+                $_SESSION['title'] = "";
+            }else {
+                $_SESSION['title'] = $_POST['title'];
+            }
+
+            if(empty($_POST["content"])){
+                $_SESSION['contentError'] = "Content field is required.";
+                $_SESSION['content'] = "";
+            }else {
+                $_SESSION['content'] = $_POST['content'];
+            }
+
+            return back();
+        }
+
         $id = request("id");
         $title = request("title");
         $content = request("content");
@@ -94,6 +143,9 @@ class PostsController{
             $fileType = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
             if($fileType != "jpg" && $fileType != "jpeg" && $fileType != "png"){
+                $_SESSION['imageError'] = "Image type must be jpg or jpeg or png.";
+                $_SESSION['title'] = $_POST['title'];
+                $_SESSION['content'] = $_POST['content'];
                 return back();
             }
 
@@ -146,7 +198,9 @@ class PostsController{
         $offset = ($pageno-1)*$perPage;
         $totalPages = ceil(count($allPosts)/$perPage);
         
-        $statement = App::get('pdo')->prepare("SELECT * FROM posts WHERE title LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offset,$perPage");
+        $statement = App::get('pdo')->prepare(
+            "SELECT posts.*, users.name as author_name FROM posts LEFT JOIN users ON posts.author_id=users.id WHERE title LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offset,$perPage"
+        );
         $statement->execute();
         $posts = $statement->fetchAll(PDO::FETCH_OBJ);
 

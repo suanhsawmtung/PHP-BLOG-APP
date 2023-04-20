@@ -22,6 +22,11 @@ require "views/components/sideBar.view.php";
         <!-- /.container-fluid -->
     </section>
 
+    <?php 
+        $sessionTitle = isset($_SESSION['title'])? $_SESSION['title'] : $post->title;
+        $sessionContent = isset($_SESSION['content'])? $_SESSION['content'] : $post->content;
+    ?>
+
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -37,15 +42,31 @@ require "views/components/sideBar.view.php";
                                 <div class="form-group">
                                     <input type="hidden" name="id" value="<?= $post->id ?>">
                                     <label for="title">Blog Title:</label><br>
-                                    <input type="text" class="form-control" value="<?= $post->title ?>"
+                                    <input type="text" class="form-control" value="<?= $sessionTitle ?>"
                                         name="title" id="title" placeholder="Enter blog title..."
                                     >
+                                    <small class="text-danger">
+                                        <?php 
+                                            if(isset($_SESSION["titleError"])){
+                                                echo $_SESSION["titleError"];
+                                                unset($_SESSION["titleError"]);
+                                            }
+                                        ?>
+                                    </small>
                                 </div>
                                 <div class="form-group">
                                     <label for="content">Blog Content:</label><br>
                                     <textarea name="content" id="content" class="form-control" 
                                         cols="30" rows="10" placeholder="Enter blog content..."
-                                    ><?= $post->content ?></textarea>
+                                    ><?= $sessionContent ?></textarea>
+                                    <small class="text-danger">
+                                        <?php 
+                                            if(isset($_SESSION["contentError"])){
+                                                echo $_SESSION["contentError"];
+                                                unset($_SESSION["contentError"]);
+                                            }
+                                        ?>
+                                    </small>
                                 </div>
                                 <div class="form-group">
                                     <label for="image">Blog Image:</label><br>
@@ -56,6 +77,12 @@ require "views/components/sideBar.view.php";
                                     <input type="submit" class="btn btn-primary text-white">
                                 </div>
                             </form>
+
+                            <?php 
+                                unset($_SESSION['title']);
+                                unset($_SESSION['content']);
+                            ?>
+
                         </div>
                     </div>
                 </div>

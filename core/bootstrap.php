@@ -17,3 +17,4 @@ App::bind("pdo", Connection::make(App::get("config")["database"]));
 require "core/controllers/AuthController.php";
 require "core/controllers/admin/PostsController.php";
 require "core/controllers/user/BlogsController.php";
+require "core/controllers/admin/RoleController.php";

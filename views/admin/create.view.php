@@ -22,6 +22,11 @@ require "views/components/sideBar.view.php";
         <!-- /.container-fluid -->
     </section>
 
+    <?php 
+        $sessionTitle = isset($_SESSION['title'])? $_SESSION['title'] : "";
+        $sessionContent = isset($_SESSION['content'])? $_SESSION['content'] : "";
+    ?>
+
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -36,20 +41,50 @@ require "views/components/sideBar.view.php";
                             <form action="/admin/createBlog" method="POST" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="title">Blog Title:</label><br>
-                                    <input type="text" class="form-control" name="title" id="title" placeholder="Enter blog title..." required>
+                                    <input type="text" value="<?= $sessionTitle ?>" class="form-control" name="title" id="title" placeholder="Enter blog title...">
+                                    <small class="text-danger">
+                                        <?php 
+                                            if(isset($_SESSION["titleError"])){
+                                                echo $_SESSION["titleError"];
+                                                unset($_SESSION["titleError"]);
+                                            }
+                                        ?>
+                                    </small>
                                 </div>
                                 <div class="form-group">
                                     <label for="content">Blog Content:</label><br>
-                                    <textarea name="content" id="content" class="form-control" cols="30" rows="10" placeholder="Enter blog content..." required></textarea>
+                                    <textarea name="content" id="content" class="form-control" cols="30" rows="10" placeholder="Enter blog content..."><?= $sessionContent ?></textarea>
+                                    <small class="text-danger">
+                                        <?php 
+                                            if(isset($_SESSION["contentError"])){
+                                                echo $_SESSION["contentError"];
+                                                unset($_SESSION["contentError"]);
+                                            }
+                                        ?>
+                                    </small>
                                 </div>
                                 <div class="form-group">
                                     <label for="image">Blog Image:</label><br>
-                                    <input type="file" name="image" id="image" required>
+                                    <input type="file" name="image" id="image">
+                                    <small class="text-danger">
+                                        <?php 
+                                            if(isset($_SESSION["imageError"])){
+                                                echo $_SESSION["imageError"];
+                                                unset($_SESSION["imageError"]);
+                                            }
+                                        ?>
+                                    </small>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-primary text-white">
                                 </div>
                             </form>
+
+                            <?php 
+                                unset($_SESSION['title']);
+                                unset($_SESSION['content']);
+                            ?>
+
                         </div>
                     </div>
                 </div>
