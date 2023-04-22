@@ -20,6 +20,9 @@
         if($endUri === "admin" || in_array("posts", $uriArray)){
             $searchUri = "/admin/posts/search";
         }
+
+        $sessionSearchKey = isset($_SESSION['searchKey'])? $_SESSION['searchKey'] : "";
+    
     ?>
 
     <!-- Right navbar links -->
@@ -32,10 +35,8 @@
             <div class="navbar-search-block">
                 <form class="form-inline" action="<?= $searchUri ?>" method="GET">
 
-                    <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
-
                     <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" name="searchKey" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control form-control-navbar" name="searchKey" value="<?= escape($sessionSearchKey) ?>" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-navbar" type="submit">
           <i class="fas fa-search"></i>
@@ -46,6 +47,11 @@
                         </div>
                     </div>
                 </form>
+
+                <?php 
+                    unset($_SESSION['searchKey']);
+                ?>
+
             </div>
         </li>
     </ul>

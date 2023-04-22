@@ -14,7 +14,7 @@ class BlogsController{
 
     public function homePage(){
         $statement = App::get("pdo")->prepare(
-            "SELECT posts.*, users.name as user_name FROM posts LEFT JOIN users ON posts.author_id=users.id"
+            "SELECT posts.*, users.name as author_name FROM posts LEFT JOIN users ON posts.author_id=users.id"
         );
         $statement->execute();
         $allPosts = $statement->fetchAll(PDO::FETCH_OBJ);
@@ -24,7 +24,7 @@ class BlogsController{
 
     public function detail(){
 
-        $statement = App::get("pdo")->prepare("SELECT * FROM posts WHERE id=:id");
+        $statement = App::get("pdo")->prepare("SELECT posts.*, users.name as author_name FROM posts LEFT JOIN users ON posts.author_id=users.id WHERE posts.id=:id");
         $statement->bindValue(":id", request("id"));
         $statement->execute();
         $post = $statement->fetch(PDO::FETCH_OBJ);

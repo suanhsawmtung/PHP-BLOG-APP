@@ -45,7 +45,7 @@ require "views/components/sideBar.view.php";
                                 <div class="form-group">
                                     <input type="hidden" name="id" value="<?= $post->id ?>">
                                     <label for="title">Blog Title:</label><br>
-                                    <input type="text" class="form-control" value="<?= $sessionTitle ?>"
+                                    <input type="text" class="form-control" value="<?= escape($sessionTitle) ?>"
                                         name="title" id="title" placeholder="Enter blog title..."
                                     >
                                     <small class="text-danger">
@@ -61,7 +61,7 @@ require "views/components/sideBar.view.php";
                                     <label for="content">Blog Content:</label><br>
                                     <textarea name="content" id="content" class="form-control" 
                                         cols="30" rows="10" placeholder="Enter blog content..."
-                                    ><?= $sessionContent ?></textarea>
+                                    ><?= escape($sessionContent) ?></textarea>
                                     <small class="text-danger">
                                         <?php 
                                             if(isset($_SESSION["contentError"])){

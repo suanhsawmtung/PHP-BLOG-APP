@@ -40,7 +40,7 @@ require "views/partials/header.view.php";
               ?>
           </small>
           <div class="input-group mb-3">
-              <input type="name" class="form-control" name="name" placeholder="Username" value="<?= $sessionName ?>" >
+              <input type="name" class="form-control" name="name" placeholder="Username" value="<?= escape($sessionName) ?>" >
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-user"></span>
@@ -57,7 +57,7 @@ require "views/partials/header.view.php";
                 ?>
             </small>
             <div class="input-group mb-3">
-              <input type="email" class="form-control" name="email" placeholder="Email" value="<?= $sessionEmail ?>" >
+              <input type="email" class="form-control" name="email" placeholder="Email" value="<?= escape($sessionEmail) ?>" >
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -74,7 +74,7 @@ require "views/partials/header.view.php";
                 ?>
             </small>
             <div class="input-group mb-3">
-              <input type="password" class="form-control" name="password" placeholder="Password" value="<?= $sessionPassword ?>" >
+              <input type="password" class="form-control" name="password" placeholder="Password" value="<?= escape($sessionPassword) ?>" >
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-lock"></span>
@@ -91,7 +91,7 @@ require "views/partials/header.view.php";
                 ?>
             </small>
             <div class="input-group mb-3">
-              <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" value="<?= $confirmPassword ?>" >
+              <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" value="<?= escape($confirmPassword) ?>" >
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-lock"></span>

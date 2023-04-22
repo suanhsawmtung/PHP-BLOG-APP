@@ -16,14 +16,14 @@ require "views/partials/header.view.php";
                     <div class="card card-widget">
                         <div class="card-header">
                         <div class="user-block" >
-                            <span class="username" style="margin-left: 0 !important;"><?= $post->title ?></span>
-                            <small class="" style="margin-left: 0 !important;">Jonathan Burke Jr.</small>
+                            <span class="username" style="margin-left: 0 !important;"><?= escape($post->title) ?></span>
+                            <small class="" style="margin-left: 0 !important;"><?= escape($post->author_name) ?></small>
                         </div>
                         <!-- /.user-block -->
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <img class="w-100" src="<?= "../../".$post->image ?>" 
+                            <img class="w-100" src="<?= "../../".escape($post->image) ?>" 
                                 alt="Dist Photo 1"
                             >
 
@@ -35,7 +35,7 @@ require "views/partials/header.view.php";
                         </div>
 
                         <p class="text-muted">
-                            <?= $post->content ?>
+                            <?= escape($post->content) ?>
                         </p>
                       
                         </div>
@@ -50,10 +50,10 @@ require "views/partials/header.view.php";
 
                                 <div class="comment-text" style="margin-left: 0 !important;">
                                   <span class="username">
-                                    <?= $comment->user_name ?>
+                                    <?= escape($comment->user_name) ?>
                                     <span class="text-muted float-right"><?= Date('d M, Y - g:i A', strtotime($comment->created_at)) ?></span>
                                   </span><!-- /.username -->
-                                  <?= $comment->comment ?>
+                                  <?= escape($comment->comment) ?>
                                 </div>
                                 <!-- /.comment-text -->
                               </div>

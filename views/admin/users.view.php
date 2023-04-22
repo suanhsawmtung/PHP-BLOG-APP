@@ -78,8 +78,8 @@ require "views/components/sideBar.view.php";
                                     ?>
                                     <tr>
                                         <td><?= $i ?></td>
-                                        <td><?= $user->name ?></td>
-                                        <td><?= $user->email ?></td>
+                                        <td><?= escape($user->name) ?></td>
+                                        <td><?= escape($user->email) ?></td>
                                         <td>
                                             <?php 
                                                 if($user->role === 0){ echo "Admin"; }else{ echo "Normal user"; }
@@ -95,7 +95,7 @@ require "views/components/sideBar.view.php";
                                                         <input type="hidden" name="role" value=<?= $user->role ?> >
                                                         <button type="submit"
                                                             class="btn btn-danger text-white" style="width: 200px;"
-                                                            onclick="return confirm('Do you really want to remove <?= $user->name ?> from admin list?')"
+                                                            onclick="return confirm('Do you really want to remove <?= escape($user->name) ?> from admin list?')"
                                                         >Remove from admin list</button>
                                                     </form>
                                                 </div>
@@ -104,7 +104,7 @@ require "views/components/sideBar.view.php";
                                                         <input type="hidden" name="role" value=<?= $user->role ?> >
                                                         <button type="submit"
                                                             class="btn btn-primary text-white" style="width: 200px;"
-                                                            onclick="return confirm('Do you really want to add <?= $user->name ?> to admin list?')"
+                                                            onclick="return confirm('Do you really want to add <?= escape($user->name) ?> to admin list?')"
                                                         >Add to admin list</button>
                                                     </form>
                                                 </div>

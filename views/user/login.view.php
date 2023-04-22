@@ -52,7 +52,7 @@ require "views/partials/header.view.php";
                 ?>
             </small>
             <div class="input-group mb-3">
-              <input type="email" class="form-control" name="email" placeholder="Email" value="<?= $sessionEmail ?>" >
+              <input type="email" class="form-control" name="email" placeholder="Email" value="<?= escape($sessionEmail) ?>" >
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -69,7 +69,7 @@ require "views/partials/header.view.php";
                 ?>
             </small>
             <div class="input-group mb-3">
-              <input type="password" class="form-control" name="password" placeholder="Password" value="<?= $sessionPassword ?>" >
+              <input type="password" class="form-control" name="password" placeholder="Password" value="<?= escape($sessionPassword) ?>" >
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-lock"></span>

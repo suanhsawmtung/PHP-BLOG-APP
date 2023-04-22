@@ -184,8 +184,6 @@ class PostsController{
     public function search(){
         $searchKey = request("searchKey");
 
-        csrf_token();
-
         if(empty($searchKey)){
             return redirect("/admin");
         }
@@ -209,6 +207,7 @@ class PostsController{
         );
         $statement->execute();
         $posts = $statement->fetchAll(PDO::FETCH_OBJ);
+        $_SESSION["searchKey"] = request("searchKey");
 
         return view("admin.index", [
             "posts" => $posts,

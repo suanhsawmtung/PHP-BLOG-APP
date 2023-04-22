@@ -34,15 +34,15 @@ require "views/partials/header.view.php";
                         <div class="card card-widget">
                             <div class="card-header">
                                 <div class="user-block" >
-                                    <span class="username" style="margin-left: 0 !important;"><a href="<?= "detail?id=".$post->id ?>"><?= $post->title ?></a></span>
-                                    <small  style="margin-left: 0 !important;"><?= $post->user_name ?></small>
+                                    <span class="username" style="margin-left: 0 !important;"><a href="<?= "detail?id=".$post->id ?>"><?= escape($post->title) ?></a></span>
+                                    <small  style="margin-left: 0 !important;"><?= escape($post->author_name) ?></small>
                                 </div>
                                 <!-- /.user-block -->
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <div style="width: 100%; height: 300px; overflow: hidden;">
-                                    <img class="img-fluid pad" src="<?= "../../".$post->image ?>" 
+                                    <img class="img-fluid pad" src="<?= "../../".escape($post->image) ?>" 
                                         style="width: 100%; height: 100%; object-fit: cover;" alt="Dist Photo 1"
                                     >
                                 </div>

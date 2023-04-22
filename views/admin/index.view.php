@@ -76,10 +76,10 @@ require "views/components/sideBar.view.php";
                                     ?>
                                     <tr>
                                         <td><?= $i ?></td>
-                                        <td><?= $post->author_name ?></td>
-                                        <td><?= $post->title ?></td>
+                                        <td><?= escape($post->author_name) ?></td>
+                                        <td><?= escape($post->title) ?></td>
                                         <td>
-                                            <?= substr($post->content, 0, 50)."..." ?>
+                                            <?= escape(substr($post->content, 0, 50)."...") ?>
                                         </td>
                                         <td>
                                             <?= Date('d M, Y - g:i A', strtotime($post->created_at)) ?>
