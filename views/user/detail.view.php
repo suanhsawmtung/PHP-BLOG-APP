@@ -63,6 +63,7 @@ require "views/partials/header.view.php";
                           <!-- /.card-footer -->
                           <div class="card-footer">
                             <form action="/comment" method="post">
+                              <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
                               <div class="img-push">
                                 <input type="hidden" name="user_id" value=<?= $_SESSION['id'] ?>>
                                 <input type="hidden" name="post_id" value=<?= $post->id ?>>

@@ -40,6 +40,9 @@ require "views/partials/header.view.php";
           <p class="login-box-msg">Sign in to start your session</p>
 
           <form action="/user/login" method="post">
+
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
+
             <small class="text-danger">
                 <?php 
                     if(isset($_SESSION["emailError"])){

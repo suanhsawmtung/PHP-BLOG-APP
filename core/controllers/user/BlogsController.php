@@ -41,6 +41,9 @@ class BlogsController{
     }
 
     public function comment(){
+        
+        csrf_token();
+        
         if(empty($_POST["comment"])){
             return back();
         }

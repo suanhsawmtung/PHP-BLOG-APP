@@ -29,6 +29,8 @@ class AuthController{
         $password = request("password");
         $confirm_password = request("confirm_password");
 
+        csrf_token();
+
         if(empty($_POST["name"]) || empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["confirm_password"])){
             if(empty($_POST["name"])){
                 $_SESSION['nameError'] = "User name field is required.";
@@ -74,7 +76,7 @@ class AuthController{
                 $result = $statement->execute([
                     ":name" => $name,
                     ":email" => $email,
-                    ":password" => $password
+                    ":password" => password_hash($password, PASSWORD_DEFAULT)
                 ]);
 
                 if($result){
@@ -111,6 +113,8 @@ class AuthController{
     //  Admin, User login
     private function login(string $logged_in){
 
+        csrf_token();
+
         if(empty($_POST["email"]) || empty($_POST["password"])){
             if(empty($_POST["email"])){
                 $_SESSION['emailError'] = "Email is required.";
@@ -132,7 +136,7 @@ class AuthController{
 
         $role = $logged_in === "/"? 1 : 0;
 
-        if(isset($user) && $user['password']===request('password') && $user["role"] == $role){
+        if(isset($user) && password_verify(request('password'), $user['password']) && $user["role"] == $role){
             $_SESSION['id'] = $user['id'];
             $_SESSION['logged_in'] = time();
             $_SESSION['user_name'] = $user['name'];
@@ -141,6 +145,7 @@ class AuthController{
             return redirect($logged_in);
         }
 
+        $_SESSION['email'] = $_POST['email'];
         $_SESSION["error"] = "The credentials doesn't match.";
         return back();
     }

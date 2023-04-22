@@ -31,6 +31,9 @@
             </a>
             <div class="navbar-search-block">
                 <form class="form-inline" action="<?= $searchUri ?>" method="GET">
+
+                    <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
+
                     <div class="input-group input-group-sm">
                         <input class="form-control form-control-navbar" name="searchKey" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">

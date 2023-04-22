@@ -7,6 +7,7 @@ require "core/helperFunctions.php";
 require "core/database/Connection.php";
 require "core/router/router.php";
 require "Routes.php";
+require "common.php";
 
 /**_____Dependencies Store_____ */
 App::bind("config", require "config.php");

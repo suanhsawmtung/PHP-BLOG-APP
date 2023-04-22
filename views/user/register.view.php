@@ -5,21 +5,6 @@ require "views/partials/header.view.php";
 
 ?>
 
-<!-- Alert -->
-<!-- <?php if(isset($_SESSION["error"])): ?>
-<div class="container-fluid p-0 position-fixed" style="top: 20px; z-index: 222222;">
-    <div class="row m-0 p-0">
-        <div class="alert alert-warning alert-dismissible col-5 offset-6" role="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <?php 
-                echo $_SESSION["error"];
-                unset($_SESSION["error"]);
-            ?>
-        </div>
-    </div>
-</div>
-<?php  endif ?> -->
-
 
 <!-- Content Wrapper. Contains page content -->
 <div style="background-color: #e9ecef;"
@@ -43,6 +28,9 @@ require "views/partials/header.view.php";
           <p class="login-box-msg">Register to start your session</p>
 
           <form action="/register" method="post">
+
+          <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
+
           <small class="text-danger">
               <?php 
                   if(isset($_SESSION["nameError"])){

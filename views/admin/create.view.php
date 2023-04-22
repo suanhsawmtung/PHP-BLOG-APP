@@ -39,6 +39,9 @@ require "views/components/sideBar.view.php";
                         <!-- /.card-header -->
                         <div class="card-body">
                             <form action="/admin/createBlog" method="POST" enctype="multipart/form-data">
+
+                                <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
+
                                 <div class="form-group">
                                     <label for="title">Blog Title:</label><br>
                                     <input type="text" value="<?= $sessionTitle ?>" class="form-control" name="title" id="title" placeholder="Enter blog title...">

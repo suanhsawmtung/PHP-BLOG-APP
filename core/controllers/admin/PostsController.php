@@ -51,6 +51,8 @@ class PostsController{
 
     public function createBlog(){
 
+        csrf_token();
+
         if(empty($_POST["title"]) || empty($_POST["content"]) || empty($_FILES["image"]["name"])){
             if(empty($_POST["title"])){
                 $_SESSION['titleError'] = "Title field is required.";
@@ -112,6 +114,8 @@ class PostsController{
     }
 
     public function updateBlog(){
+
+        csrf_token();
 
         if(empty($_POST["title"]) || empty($_POST["content"])){
             if(empty($_POST["title"])){
@@ -179,6 +183,8 @@ class PostsController{
 
     public function search(){
         $searchKey = request("searchKey");
+
+        csrf_token();
 
         if(empty($searchKey)){
             return redirect("/admin");
