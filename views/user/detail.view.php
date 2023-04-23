@@ -42,22 +42,26 @@ require "views/partials/header.view.php";
                         <!-- /.card-body -->
 
                         <!-- /.card-body -->
-                        <div class="card-footer card-comments <?php if(count($comments) === 0){ echo "d-none"; } ?>">
+                        <div class="card-footer card-comments">
                             <h4>Comments</h4>
+                            
+                            <div id="commentBox">
 
-                            <?php foreach($comments as $comment): ?>
-                              <div class="card-comment">
-
-                                <div class="comment-text" style="margin-left: 0 !important;">
-                                  <span class="username">
-                                    <?= escape($comment->user_name) ?>
-                                    <span class="text-muted float-right"><?= Date('d M, Y - g:i A', strtotime($comment->created_at)) ?></span>
-                                  </span><!-- /.username -->
-                                  <?= escape($comment->comment) ?>
+                              <?php foreach($comments as $comment): ?>
+                                <div class="card-comment">
+                                  <div class="comment-text" style="margin-left: 0 !important;">
+                                    <span class="username">
+                                      <?= escape($comment->user_name) ?>
+                                      <span class="text-muted float-right"><?= Date('d M, Y - g:i A', strtotime($comment->created_at)) ?></span>
+                                    </span><!-- /.username -->
+                                    <?= escape($comment->comment) ?>
+                                  </div>
+                                  <!-- /.comment-text -->
                                 </div>
-                                <!-- /.comment-text -->
-                              </div>
-                            <?php endforeach ?>
+                              <?php endforeach ?>
+
+                            </div>
+                            
                             <!-- /.card-comment -->
                           </div>
                           <!-- /.card-footer -->
@@ -95,6 +99,38 @@ require "views/partials/header.view.php";
     </a>
     </div>
     <!-- /.content-wrapper -->
+
+    <script>
+
+      // Enable pusher logging - don't include this in production
+      Pusher.logToConsole = true;
+
+      var pusher = new Pusher('2360b8f55f7fdbc1d58b', {
+        cluster: 'ap1'
+      });
+      
+      let newComment = [];
+
+      var channel = pusher.subscribe('comment-channel');
+      channel.bind('comment-event', function(data) {
+        $list='';
+        newComment.push(data.resultComment);
+
+        $list = `
+          <div class="card-comment" >
+              <div class="comment-text" style="margin-left: 0 !important;">
+                <span class="username">
+                  ${newComment[newComment.length-1].user_name}
+                  <span class="text-muted float-right">Just now.</span>
+                </span>
+                 ${newComment[newComment.length-1].comment}
+              </div>
+          </div>
+        `;
+
+        $("#commentBox").append($list);
+      });
+  </script>
 
 <?php 
 

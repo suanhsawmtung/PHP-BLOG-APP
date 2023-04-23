@@ -1,0 +1,16 @@
+{
+    "autoload": {
+        "classmap": [
+            "./"
+        ],
+        "files": [
+            "core/helperFunctions.php",
+            "Routes.php",
+            "common.php",
+            "pusher.php"
+        ]
+    },
+    "require": {
+        "pusher/pusher-php-server": "^7.2"
+    }
+}

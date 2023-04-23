@@ -16,6 +16,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <!-- pusher -->
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
