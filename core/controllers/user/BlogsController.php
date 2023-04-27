@@ -69,8 +69,6 @@ class BlogsController{
             $resultComment = new stdClass();
             $resultComment->user_name = escape($userName["name"]);
             $resultComment->comment = escape($comment);
-            $resultComment->created_at = time();
-            $resultComment->user_id = intval($user_id);
 
             pusher_comment($resultComment);
         }
