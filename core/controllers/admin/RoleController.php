@@ -54,8 +54,11 @@ class RoleController{
         $statement = App::get("pdo")->prepare("UPDATE users SET role='$newRole' WHERE id='$id'");
         $statement->execute();
 
-        $_SESSION['success'] = "Changed Role successfully.";
-        return back();
+        if($statement->rowCount()){
+            $_SESSION['success'] = "Changed Role successfully.";
+            pusher_role($id, $newRole);
+            return back();
+        }
     }
 
     public function search(){

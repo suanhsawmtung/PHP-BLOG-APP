@@ -69,6 +69,7 @@ class BlogsController{
             $resultComment = new stdClass();
             $resultComment->user_name = escape($userName["name"]);
             $resultComment->comment = escape($comment);
+            $resultComment->post_id = escape($post_id);
 
             pusher_comment($resultComment);
         }

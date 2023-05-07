@@ -20,6 +20,7 @@ require "views/partials/header.view.php";
 </div>
 <?php  endif ?>
 
+
 <!-- Content Wrapper. Contains page content -->
 <div style="background-color: #e9ecef;"
     class="vw-100 vh-100 d-flex justify-content-center align-items-center"

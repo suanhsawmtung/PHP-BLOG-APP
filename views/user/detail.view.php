@@ -70,7 +70,7 @@ require "views/partials/header.view.php";
                               <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
                               <div class="img-push">
                                 <input type="hidden" name="user_id" value=<?= $_SESSION['id'] ?>>
-                                <input type="hidden" name="post_id" value=<?= $post->id ?>>
+                                <input type="hidden" id="postId" name="post_id" value=<?= $post->id ?>>
                                 <input type="text" name="comment" class="form-control form-control-sm" placeholder="Press enter to post comment">
                               </div>
                             </form>
@@ -108,27 +108,28 @@ require "views/partials/header.view.php";
       var pusher = new Pusher('2360b8f55f7fdbc1d58b', {
         cluster: 'ap1'
       });
-      
-      let newComment = [];
+    
 
       var channel = pusher.subscribe('comment-channel');
       channel.bind('comment-event', function(data) {
         $list='';
-        newComment.push(data.resultComment);
+        let newComment=data.resultComment;
 
         $list = `
           <div class="card-comment" >
               <div class="comment-text" style="margin-left: 0 !important;">
                 <span class="username">
-                  ${newComment[newComment.length-1].user_name}
+                  ${newComment.user_name}
                   <span class="text-muted float-right">Just now.</span>
                 </span>
-                 ${newComment[newComment.length-1].comment}
+                 ${newComment.comment}
               </div>
           </div>
         `;
 
-        $("#commentBox").append($list);
+        if($("#postId").val() == newComment.post_id){
+          $("#commentBox").append($list);
+        }
       });
   </script>
 
