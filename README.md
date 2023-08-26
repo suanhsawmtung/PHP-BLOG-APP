@@ -1,12 +1,12 @@
 
 # PHP Blog App
 
-    My first try of pure php and realtime pusher
+    My first try of pure php and real-time pusher
 
 
 ## Features
 
-    For normal user,
+    For a normal user,
     - Browsing blogs
     - Read blog
     - Realtime comment
@@ -26,10 +26,10 @@
         mkdir -p public/images
         composer install
 
-    3. Create New Empty Database and connect in config.php
+    3. Create a New Empty Database and connect in config.php
 
-    4. Create 3 tables for users, posts and comments
+    4. Create 3 tables for users, posts, and comments
 
-    5. Now U are ready to go. Run this command
+    5. Now You are ready to go. Run this command
 
         php -S localhost: 8000
